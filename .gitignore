@@ -66,3 +66,6 @@ weatherfiles
 # Pycachy files
 __pycache__
 *.pyc
+
+# DB files
+*.sqlite3
