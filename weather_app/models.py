@@ -1,28 +1,28 @@
-from __future__ import unicode_literals
+# This file will contain user models
 from django.db import models
-import uuid
 
-""" Custiom time stamp model """
+
+# Create your models here.
+
+
 class CustomTimeStampModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
 
-    """ using to set class abstract for to create a model """
     class Meta:
         abstract = True
 
-""" Weather Characteristics model """
+
 class WeatherCharacteristic(CustomTimeStampModel):
     min_value = models.DecimalField(max_digits=5, decimal_places=1)
     max_value = models.DecimalField(max_digits=5, decimal_places=1)
     avg_value = models.DecimalField(max_digits=5, decimal_places=1)
 
-    """ return back fields to the admin panel """
     def __str__(self):
-        return r"{0} - {1} - {2}".format(self.min_value,self.max_value,self.avg_value)
+        return f"max={self.max_value},  mean={self.avg_value},  min={self.min_value}"
 
-""" Weather model """
+
 class Weather(CustomTimeStampModel):
     weather_date = models.DateField(unique=True)
     temperature = models.OneToOneField(WeatherCharacteristic, on_delete=models.CASCADE, related_name='+')
@@ -36,6 +36,5 @@ class Weather(CustomTimeStampModel):
     events = models.CharField(max_length=5, default="")
     wind_dir_degrees = models.CharField(max_length=5, default="")
 
-    """ return back weather date to admin panel """
     def __str__(self):
-        return r"{0}".format(self.weather_date)
+        return f"{self.weather_date}"
